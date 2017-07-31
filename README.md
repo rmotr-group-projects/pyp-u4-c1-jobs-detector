@@ -1,6 +1,24 @@
 # [pyp-w3] Jobs Detector
 
-Today we will develop a command line tool which aims to parse certain websites looking for job statistics based on given keywords. In this very first version of the tool, we will only implement a parser for the HackerNews blog, which includes a monthly report of "Who is hiring?". Example: https://news.ycombinator.com/item?id=11814828
+Today we will develop a command line tool which aims to parse certain websites looking for job statistics based on given keywords. In this project we will implement a parser for the HackerNews blog, which includes a monthly report of "Who is hiring?". Example: https://news.ycombinator.com/item?id=11814828
+
+We are going to access this data through HackerNews' publicly available API which has documentation available at: https://github.com/HackerNews/API We will be accessing the the api using the Requests library (http://docs.python-requests.org/en/master/)
+
+Requests makes it **very** easy to access APIs:
+```
+>>> r = requests.get('https://api.github.com/user', auth=('user', 'pass'))
+>>> r.status_code
+200
+>>> r.headers['content-type']
+'application/json; charset=utf8'
+>>> r.encoding
+'utf-8'
+>>> r.text
+u'{"type":"User"...'
+>>> r.json()
+{u'private_gists': 419, u'total_private_repos': 77, ...}
+```
+
 
 ## Command usage
 
@@ -14,6 +32,7 @@ Options:
   -i, --post-id TEXT       [required]
   -k, --keywords TEXT
   -c, --combinations TEXT
+  -o, --output TEXT
   --help                   Show this message and exit.
 ```
 
@@ -22,16 +41,22 @@ Options:
 To request jobs statistics using a default set of keywords, just call the `hacker_news` subcommand providing a valid HN post id (see the last part of the sample URL above), like this:
 
 ```bash
-$ jobs_detector hacker_news -i 11814828
-Total job posts: 888
-
-Keywords:
-Remote: 174 (19%)
-Postgres: 81 (9%)
-Python: 144 (16%)
-Javascript: 118 (13%)
-React: 133 (14%)
-Pandas: 5 (0%)
+$ jobs_detector/jobs_detector hacker_news -i 11814828
+```
+This will output a jobs.json to our root project directory with the following format:
+```json
+{
+"total_jobs": 123,
+"counts": {"remote": 10,
+		   "postgres": 6,
+		   "python": 20,
+		   "javascript": 14,
+		   "react": 15,
+		   "pandas": 3},
+"keywords": {"remote": [a list containing the text of each matching posting],
+			 ...
+			}
+}
 ```
 
 ### Keywords filtering
@@ -40,12 +65,17 @@ For statistics about a sub set of the default keywords, or even custom keywords 
 
 ```bash
 $ jobs_detector hacker_news -i 11814828 -k python,django,ruby
-Total job posts: 889
-
-Keywords:
-Python: 144 (16%)
-Ruby: 80 (8%)
-Django: 36 (4%)
+```
+```json
+{
+"total_jobs": 123,
+"counts": {"python": 20,
+		   "django": 14,
+		   "ruby": 15},
+"keywords": {"python": [a list containing the text of each matching posting],
+			 ...
+			}
+}
 ```
 
 ### Combination stats
@@ -54,22 +84,36 @@ It's also possible to request statistics of certain combination of keywords. For
 
 ```bash
 $ jobs_detector hacker_news -i 11814828 -c remote-python-flask,remote-django
-Total job posts: 888
-
-Keywords:
-Remote: 174 (19%)
-Postgres: 81 (9%)
-Python: 144 (16%)
-Javascript: 118 (13%)
-React: 133 (14%)
-Pandas: 5 (0%)
-
-Combinations:
-Remote-Python-Flask: 2 (0%)
-Remote-Django: 6 (0%)
+```
+```json
+{
+"total_jobs": 123,
+"counts": {"remote": 10,
+		   "postgres": 6,
+		   "python": 20,
+		   "javascript": 14,
+		   "react": 15,
+		   "pandas": 3,
+		   "remote-python-flask": 6,
+		   "remote-django": 4},
+"keywords": {"remote": [a list containing the text of each matching posting],
+			 ...
+			}
+"combinations": {"remote-python-flask": [list of postings],
+				 ...
+				}
+}
 ```
 
-Feel free to extend the functionality of this command by adding extra parameters or even more subcommands to parse different websites.
+If you wish to extend the functionality of this we have included commented out tests for output in xml or pickle by using the command argument `-o xml` or `-o pickle` such as:
+```bash
+$ jobs_detector hacker_news -i 11814828 -c remote-python-flask,remote-django -o xml
+```
+Relevant Python documentation for xml and pickle:
+
+ - https://docs.python.org/3/library/xml.etree.elementtree.html
+ - https://docs.python.org/3/library/pickle.html
+ - [Using Pickle to Save Objects in Python](https://www.thoughtco.com/using-pickle-to-save-objects-2813661)
 
 ## Your command available in pypi
 
