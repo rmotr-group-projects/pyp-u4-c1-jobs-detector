@@ -1,0 +1,2 @@
+class InvalidOutputFormat(Exception):
+    pass
