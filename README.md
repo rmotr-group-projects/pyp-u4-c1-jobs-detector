@@ -116,10 +116,3 @@ Relevant Python documentation for xml and pickle:
  - https://docs.python.org/3/library/pickle.html
  - [Using Pickle to Save Objects in Python](https://www.thoughtco.com/using-pickle-to-save-objects-2813661)
 
-## Your command available in pypi
-
-Finally, to wrap up this group work, you must make your command tool available in pypi (Python Package Index). Any person out there must be able to use the `pip` command and install a local version of your project. To do this, we will follow some naming conventions so we don't have conflicts between each other. This is the naming convention you must follow for your package: `rmotr-bX-cY-gZ-jobs-detector`, where `X`, `Y` and `Z` are the batch number, course number and group number respectively.
-
-Anyone should be able to install the package by executing, for example: `pip install rmotr-b6-c1-g3-jobs-detector`.
-
-Here you have a very detailed guide about how to upload things to pypi: https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/
