@@ -19,6 +19,7 @@ u'{"type":"User"...'
 {u'private_gists': 419, u'total_private_repos': 77, ...}
 ```
 
+The program will output a json file to the directory defined in our `settings.py`. [Python json documentation](https://docs.python.org/3/library/json.html) 
 
 ## Command usage
 
