@@ -9,7 +9,7 @@ from jobs_detector import settings
 from jobs_detector.exceptions import *
 
 DEFAULT_KEYWORDS = [
-    #Put your default keywords here
+    # Put your default keywords here
 ]
 
 
