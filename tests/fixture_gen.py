@@ -18,7 +18,7 @@ def get_fixture(post_id, fixtures):
     with open(filepath, 'wb') as out:
         out.write(r.content)
 
-    fixtures.append((url, filepath))
+    fixtures.append((url, FILE.format(post_id)))
 
     return r.json()
 
@@ -31,4 +31,4 @@ for post in root['kids']:
 
 picklefile = path.join(path.dirname(FIXTURE_PATH), 'fixtures.pickle')
 with open(picklefile, 'wb') as p:
-    pickle.dump(fixtures, p)
+    pickle.dump(fixtures, p, protocol=2)

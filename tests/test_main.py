@@ -38,7 +38,8 @@ class HackerNewsTestCase(unittest.TestCase):
         if not isinstance(result.exc_info[1], SystemExit) or\
            result.exc_info[1].code != 0:
             excep_type, orig_excep, tb = result.exc_info
-            raise excep_type().with_traceback(tb) from orig_excep
+            
+            raise orig_excep(None, tb)
 
         with open(os.path.join(settings.BASE_DIR, 'jobs.json')) as f:
             data = json.load(f)
@@ -54,8 +55,8 @@ class HackerNewsTestCase(unittest.TestCase):
         self.assertEqual(data['total_jobs'], expected_total)
         self.assertEqual(data['counts'], expected_counts)
 
-        javascript_job = "QA Lead &amp; Core Engineer | Replicated | Los Angeles | $70k - $80k, $130k - $150k both with equity | <a href=\"https:&#x2F;&#x2F;www.replicated.com\" rel=\"nofollow\">https:&#x2F;&#x2F;www.replicated.com</a><p>Replicated is building tools to support how enterprise software is built. We are simplifying how cloud based SaaS vendors can ship private cloud and on-premise versions of their software. We are a Series-A stage company based in Los Angeles working great customers including Travis CI, npm, Code Climate, Sysdig, Circle CI and many others. We are a small team looking to grow in some key positions.<p>One of the most important next hires will be a QA Lead to own the testing of our hosted and on premise products. If you have experience building and scaling test automation it would be great to talk. Experience with Ansible, Golang and Docker are big pluses for us.<p>In this role you will be:<p>• Building and scaling test automation<p>• Performing manual tests and developing effective testing plans<p>• Implementing best practices to integrate QA into the development process<p>We are also looking for engineers to help build and scale our products. Experience with Golang, Javascript, Docker and bash are key in this role. In this position you will be:<p>• Delivering critical features of our installable and hosted products<p>• Participating in architecture and design decisions about the product<p>• Managing production servers<p>Sound interesting? Want to talk? Email: austin (at) replicated (dot) com"
-        self.assertTrue(any((job['text'] == javascript_job for job in data['keywords']['javascript'])))
+        javascript_job = "QA Lead &amp; Core Engineer | Replicated | Los Angeles | $70k - $80k, $130k - $150k both with equity |"
+        self.assertTrue(any((job['text'].startswith(javascript_job) for job in data['keywords']['javascript'])))
         
 
     @responses.activate
@@ -72,7 +73,8 @@ class HackerNewsTestCase(unittest.TestCase):
         if not isinstance(result.exc_info[1], SystemExit) or\
            result.exc_info[1].code != 0:
             excep_type, orig_excep, tb = result.exc_info
-            raise excep_type().with_traceback(tb) from orig_excep
+            
+            raise orig_excep(None, tb)
 
         with open(os.path.join(settings.BASE_DIR, 'jobs.json')) as f:
             data = json.load(f)
@@ -98,7 +100,8 @@ class HackerNewsTestCase(unittest.TestCase):
         if not isinstance(result.exc_info[1], SystemExit) or\
            result.exc_info[1].code != 0:
             excep_type, orig_excep, tb = result.exc_info
-            raise excep_type().with_traceback(tb) from orig_excep
+            
+            raise orig_excep(None, tb)
 
         with open(os.path.join(settings.BASE_DIR, 'jobs.json')) as f:
             data = json.load(f)
@@ -132,7 +135,8 @@ class HackerNewsTestCase(unittest.TestCase):
         if not isinstance(result.exc_info[1], SystemExit) or\
            result.exc_info[1].code != 0:
             excep_type, orig_excep, tb = result.exc_info
-            raise excep_type().with_traceback(tb) from orig_excep
+            
+            raise orig_excep(None, tb)
 
         with open(os.path.join(settings.BASE_DIR, 'jobs.json')) as f:
             data = json.load(f)
@@ -160,7 +164,8 @@ class HackerNewsTestCase(unittest.TestCase):
         if not isinstance(result.exc_info[1], SystemExit) or\
            result.exc_info[1].code != 0:
             excep_type, orig_excep, tb = result.exc_info
-            raise excep_type().with_traceback(tb) from orig_excep
+            
+            raise orig_excep(None, tb)
 
         with open(os.path.join(settings.BASE_DIR, 'jobs.pickle'), 'rb') as f:
             data = pickle.load(f)
@@ -188,7 +193,8 @@ class HackerNewsTestCase(unittest.TestCase):
         if not isinstance(result.exc_info[1], SystemExit) or\
            result.exc_info[1].code != 0:
             excep_type, orig_excep, tb = result.exc_info
-            raise excep_type().with_traceback(tb) from orig_excep
+            
+            raise orig_excep(None, tb)
 
         xmlfile = os.path.join(settings.BASE_DIR, 'jobs.xml')
         tree = ET.parse(xmlfile)
