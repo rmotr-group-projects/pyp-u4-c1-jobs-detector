@@ -44,7 +44,7 @@ To request jobs statistics using a default set of keywords, just call the `hacke
 $ jobs_detector/jobs_detector hacker_news -i 11814828
 ```
 This will output a jobs.json to our root project directory with the following format:
-```json
+```
 {
 "total_jobs": 123,
 "counts": {"remote": 10,
@@ -66,7 +66,7 @@ For statistics about a sub set of the default keywords, or even custom keywords 
 ```bash
 $ jobs_detector hacker_news -i 11814828 -k python,django,ruby
 ```
-```json
+```
 {
 "total_jobs": 123,
 "counts": {"python": 20,
@@ -85,7 +85,7 @@ It's also possible to request statistics of certain combination of keywords. For
 ```bash
 $ jobs_detector hacker_news -i 11814828 -c remote-python-flask,remote-django
 ```
-```json
+```
 {
 "total_jobs": 123,
 "counts": {"remote": 10,
