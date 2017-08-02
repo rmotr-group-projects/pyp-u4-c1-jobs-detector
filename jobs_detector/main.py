@@ -60,7 +60,7 @@ def get_job_offers(post_id):
         raise ValueError('Got unexpected response from Hacker News '
                          'site: {}'.format(response.status_code))
     posts = (requests.get(settings.BASE_URL.format(pid)).json() for pid in response.json()['kids'])
-    job_offers = [post for post in posts if post.get('text', None)]
+    job_offers = [post['text'] for post in posts if post.get('text', None)]
     return job_offers
 
 
