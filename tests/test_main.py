@@ -54,6 +54,12 @@ class HackerNewsTestCase(unittest.TestCase):
 
         self.assertEqual(data['total_jobs'], expected_total)
         self.assertEqual(data['counts'], expected_counts)
+
+
+
+        javascript_job = "QA Lead &amp; Core Engineer | Replicated | Los Angeles | $70k - $80k, $130k - $150k both with equity |"
+        self.assertTrue(any((job.startswith(javascript_job) for job in data['keywords']['javascript'])))
+
         
         javascript_job = "QA Lead &amp; Core Engineer | Replicated | Los Angeles | $70k - $80k, $130k - $150k both with equity |"
         self.assertTrue(any((job.startswith(javascript_job) for job in data['keywords']['javascript'])))
