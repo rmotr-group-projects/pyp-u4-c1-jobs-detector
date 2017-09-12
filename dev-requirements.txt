@@ -5,3 +5,4 @@ coverage==4.0.3
 tox==2.3.1
 responses==0.5.1
 click==6.6
+six
