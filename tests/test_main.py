@@ -9,6 +9,8 @@ import sys
 import json
 import pickle
 
+import six
+
 import xml.etree.ElementTree as ET
 
 import responses
@@ -19,6 +21,11 @@ from jobs_detector.main import jobs_detector
 
 from . import fixtures
 
+def handle_errors(result):
+    if not isinstance(result.exc_info[1], SystemExit) or\
+        result.exc_info[1].code != 0:
+        excep_type, orig_excep, tb = result.exc_info
+        six.reraise(excep_type, orig_excep, tb)
 
 class HackerNewsTestCase(unittest.TestCase):
 
@@ -34,12 +41,7 @@ class HackerNewsTestCase(unittest.TestCase):
             ['hacker_news', '-i', self.post_id]
         )
 
-        # Print useful error messages
-        if not isinstance(result.exc_info[1], SystemExit) or\
-           result.exc_info[1].code != 0:
-            excep_type, orig_excep, tb = result.exc_info
-            
-            raise orig_excep(None, tb)
+       handle_errors(result)
 
         with open(os.path.join(settings.BASE_DIR, 'jobs.json')) as f:
             data = json.load(f)
@@ -69,12 +71,7 @@ class HackerNewsTestCase(unittest.TestCase):
              '-k', 'python,django']
         )
 
-        # Print useful error messages
-        if not isinstance(result.exc_info[1], SystemExit) or\
-           result.exc_info[1].code != 0:
-            excep_type, orig_excep, tb = result.exc_info
-            
-            raise orig_excep(None, tb)
+        handle_errors(result)
 
         with open(os.path.join(settings.BASE_DIR, 'jobs.json')) as f:
             data = json.load(f)
@@ -96,12 +93,7 @@ class HackerNewsTestCase(unittest.TestCase):
              '-c', 'python-remote,python-django,django-remote']
         )
 
-        # Print useful error messages
-        if not isinstance(result.exc_info[1], SystemExit) or\
-           result.exc_info[1].code != 0:
-            excep_type, orig_excep, tb = result.exc_info
-            
-            raise orig_excep(None, tb)
+        handle_errors(result)
 
         with open(os.path.join(settings.BASE_DIR, 'jobs.json')) as f:
             data = json.load(f)
@@ -131,12 +123,7 @@ class HackerNewsTestCase(unittest.TestCase):
              '-c', 'python-remote,python-django,django-remote']
         )
 
-        # Print useful error messages
-        if not isinstance(result.exc_info[1], SystemExit) or\
-           result.exc_info[1].code != 0:
-            excep_type, orig_excep, tb = result.exc_info
-            
-            raise orig_excep(None, tb)
+        handle_errors(result)
 
         with open(os.path.join(settings.BASE_DIR, 'jobs.json')) as f:
             data = json.load(f)
@@ -160,12 +147,7 @@ class HackerNewsTestCase(unittest.TestCase):
             ['hacker_news', '-i', self.post_id, '-o', 'pickle']
         )
 
-        # Print useful error messages
-        if not isinstance(result.exc_info[1], SystemExit) or\
-           result.exc_info[1].code != 0:
-            excep_type, orig_excep, tb = result.exc_info
-            
-            raise orig_excep(None, tb)
+        handle_errors(result)
 
         with open(os.path.join(settings.BASE_DIR, 'jobs.pickle'), 'rb') as f:
             data = pickle.load(f)
@@ -189,12 +171,7 @@ class HackerNewsTestCase(unittest.TestCase):
             ['hacker_news', '-i', self.post_id, '-o', 'xml']
         )
 
-        # Print useful error messages
-        if not isinstance(result.exc_info[1], SystemExit) or\
-           result.exc_info[1].code != 0:
-            excep_type, orig_excep, tb = result.exc_info
-            
-            raise orig_excep(None, tb)
+        handle_errors(result)
 
         xmlfile = os.path.join(settings.BASE_DIR, 'jobs.xml')
         tree = ET.parse(xmlfile)
