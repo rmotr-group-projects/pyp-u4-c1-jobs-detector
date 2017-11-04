@@ -41,7 +41,7 @@ class HackerNewsTestCase(unittest.TestCase):
             ['hacker_news', '-i', self.post_id]
         )
 
-       handle_errors(result)
+        handle_errors(result)
 
         with open(os.path.join(settings.BASE_DIR, 'jobs.json')) as f:
             data = json.load(f)
