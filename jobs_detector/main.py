@@ -69,9 +69,7 @@ def hacker_news(post_id, keywords, combinations, output):
             try:
                 posting = next(postings_in)
                 text = posting.get('text')
-                if not text:
-                    pass
-                else:
+                if text:
                     running_total += 1
                     results_dict = check_keywords(text, parsed_keywords, results_dict)
                     combo_dict = check_combos(text, parsed_combos, combo_dict)
