@@ -26,7 +26,7 @@ def jobs_detector():
 @click.option('-o', '--output', type=str, default='json')
 def hacker_news(post_id, keywords, combinations, output):
 
-    def get_postings_list(post_id):#, keywords, combinations, output):
+    def get_postings_list(post_id):
         '''get a list of postings from the main page'''
         r = requests.get(BASE_URL.format(post_id))
         postings_list = r.json()['kids']
@@ -49,7 +49,7 @@ def hacker_news(post_id, keywords, combinations, output):
     def parse_combos(combos_in):
         '''example of combos_in from test ['python-remote', 'python-django', 'django-remote']'''
         combos_out = [(combo, combo.split('-')) for combo in combos_in]
-        return combos_out# (combos_in, combos_in.split('-'))#
+        return combos_out
 
     def cycle_through_posts(postings_in,keywords_in, combos_in=None):
         running_total = 0
